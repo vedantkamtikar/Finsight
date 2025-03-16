@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartupInsight - Financial Analysis & Predictions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            margin-left: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        nav a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+        }
+        .search-section {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        .results-section {
+            flex: 2;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            flex: 1;
+            min-width: 150px;
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .chart-container {
+            height: 300px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .tab-container {
+            margin-top: 20px;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .prediction-section {
+            margin-top: 20px;
+        }
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .prediction-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .prediction-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .prediction-type {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .prediction-value {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .confidence {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .high {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .low {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .factors {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .factors ul {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        .industry-select {
+            margin-top: 20px;
+        }
+        .competitor-table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">StartupInsight</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Watchlist</a></li>
+                <li><a href="#" id="aiPredictionsTab">AI Predictions</a></li>
+                <li><a href="#">Competitor Analysis</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="search-section">
+                <h2>Startup Analysis</h2>
+                <input type="text" class="search-box" placeholder="Search for a startup..." id="companySearch">
+                <div>
+                    <label for="industry">Industry:</label>
+                    <select id="industry">
+                        <option value="saas">SaaS</option>
+                        <option value="fintech">FinTech</option>
+                        <option value="healthtech">HealthTech</option>
+                        <option value="cleantech">CleanTech</option>
+                        <option value="ecommerce">E-Commerce</option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label for="funding">Funding Stage:</label>
+                    <select id="funding">
+                        <option value="seed">Seed</option>
+                        <option value="seriesA">Series A</option>
+                        <option value="seriesB">Series B</option>
+                        <option value="seriesC">Series C+</option>
+                    </select>
+                </div>
+                <br>
+                <button onclick="analyzeCompany()">Analyze</button>
+                <div id="recentSearches">
+                    <h3>Recent Searches</h3>
+                    <ul>
+                        <li><a href="#" onclick="loadCompany('NutriTech')">NutriTech (HealthTech)</a></li>
+                        <li><a href="#" onclick="loadCompany('GreenEnergy')">GreenEnergy (CleanTech)</a></li>
+                        <li><a href="#" onclick="loadCompany('CloudPay')">CloudPay (FinTech)</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="results-section">
+                <h2 id="companyName">NutriTech</h2>
+                <p id="companyDescription">NutriTech is a health technology startup focused on AI-powered nutrition analysis and personalized meal planning.</p>
+                
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" onclick="openTab(event, 'overview')">Overview</div>
+                        <div class="tab" onclick="openTab(event, 'financials')">Financials</div>
+                        <div class="tab" onclick="openTab(event, 'predictions')">AI Predictions</div>
+                        <div class="tab" onclick="openTab(event, 'competitors')">Competitors</div>
+                    </div>
+                    
+                    <div id="overview" class="tab-content active">
+                        <div class="metrics">
+                            <div class="metric-card">
+                                <div>Annual Revenue</div>
+                                <div class="metric-value">$1.8M</div>
+                                <div class="change-value">+42% YoY</div>
+                            </div>
+                            <div class="metric-card">
+                                <div>Funding Raised</div>
+                                <div class="metric-value">$5.2M</div>
+                                <div>Series A</div>
+                            </div>
+                            <div class="metric-card">
+                                <div>Burn Rate</div>
+                                <div class="metric-value">$165K/mo</div>
+                                <div>13 months runway</div>
+                            </div>
+                            <div class="metric-card">
+                                <div>Customer Count</div>
+                                <div class="metric-value">12,850</div>
+                                <div>+28% YoY</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <p>[Revenue & user growth charts would be displayed here]</p>
+                        </div>
+                        
+                        <h3>Key Performance Indicators</h3>
+                        <table>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Value</th>
+                                <th>Industry Average</th>
+                                <th>Trend</th>
+                            </tr>
+                            <tr>
+                                <td>Customer Acquisition Cost (CAC)</td>
+                                <td>$85</td>
+                                <td>$120</td>
+                                <td>Improving</td>
+                            </tr>
+                            <tr>
+                                <td>Lifetime Value (LTV)</td>
+                                <td>$340</td>
+                                <td>$295</td>
+                                <td>Stable</td>
+                            </tr>
+                            <tr>
+                                <td>Monthly Active Users</td>
+                                <td>8,500</td>
+                                <td>N/A</td>
+                                <td>Growing</td>
+                            </tr>
+                            <tr>
+                                <td>Churn Rate</td>
+                                <td>4.2%</td>
+                                <td>5.8%</td>
+                                <td>Improving</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div id="financials" class="tab-content">
+                        <h3>Financial Highlights</h3>
+                        <table>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current</th>
+                                <th>Previous Year</th>
+                                <th>YoY Change</th>
+                            </tr>
+                            <tr>
+                                <td>Revenue</td>
+                                <td>$1.8M</td>
+                                <td>$1.2M</td>
+                                <td>+42%</td>
+                            </tr>
+                            <tr>
+                                <td>Gross Margin</td>
+                                <td>72%</td>
+                                <td>68%</td>
+                                <td>+4%</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Expenses</td>
+                                <td>$2.1M</td>
+                                <td>$1.5M</td>
+                                <td>+40%</td>
+                            </tr>
+                            <tr>
+                                <td>Net Income</td>
+                                <td>-$0.5M</td>
+                                <td>-$0.4M</td>
+                                <td>-25%</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="chart-container">
+                            <p>[Cash flow and expense breakdowns would be displayed here]</p>
+                        </div>
+                    </div>
+                    
+                    <div id="predictions" class="tab-content">
+                        <div class="prediction-header">
+                            <h3>AI-Powered Predictions</h3>
+                            <span>Based on industry trends, similar companies, and financial data</span>
+                        </div>
+                        
+                        <div class="prediction-cards">
+                            <div class="prediction-card">
+                                <div class="prediction-type">Revenue Growth (12 months)</div>
+                                <div class="prediction-value">+58% to +72%</div>
+                                <div class="confidence high">High Confidence (82%)</div>
+                                <div class="factors">
+                                    Key factors:
+                                    <ul>
+                                        <li>Strong product-market fit</li>
+                                        <li>Expanding user base</li>
+                                        <li>Increasing premium conversions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="prediction-card">
+                                <div class="prediction-type">Next Funding Round</div>
+                                <div class="prediction-value">Series B - $12M to $15M</div>
+                                <div class="confidence medium">Medium Confidence (68%)</div>
